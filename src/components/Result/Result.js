@@ -6,7 +6,7 @@ class Result extends Component {
         super(props);
         this.state = {
             showMore: false,
-            saved: this.props.saved
+            saved: false
         };
     }
 
@@ -18,13 +18,13 @@ class Result extends Component {
     };
 
     submitSave = event => {
-        // event.preventDefault();
+        event.preventDefault();
         this.setState({ saved: !this.state.saved })
         this.props.saveTrial(event)
     }
 
     submitRemove = event => {
-        // event.preventDefault();
+        event.preventDefault();
         this.setState({ saved: !this.state.saved })
         this.props.removeTrial(event)
 
