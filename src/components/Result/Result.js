@@ -16,29 +16,29 @@ class Result extends Component {
             var elems = document.querySelectorAll('.collapsible');
             M.Collapsible.init(elems, {});
         });
-    }
+    };
 
     showMore = event => {
         event.preventDefault();
-        this.setState({showMore: !this.state.showMore})
-        console.log(this.props.resultObject)
+        this.setState({showMore: !this.state.showMore});
+        console.log(this.props.resultObject);
 
     };
 
     submitSave = event => {
         event.preventDefault();
-        this.setState({ saved: !this.state.saved })
-        M.toast({html: 'Trial added to report', displayLength: 1500})
-        event.target.classList.add('red')
-        this.props.saveTrial(event)
+        this.setState({ saved: !this.state.saved });
+        M.toast({html: 'Trial added to report', displayLength: 1500});
+        event.target.classList.add('red');
+        this.props.saveTrial(event);
     }
 
     submitRemove = event => {
         event.preventDefault();
-        this.setState({ saved: !this.state.saved })
-        M.toast({ html: 'Trial removed from report', displayLength: 1500 })
-        event.target.classList.remove('red')
-        this.props.removeTrial(event)
+        this.setState({ saved: !this.state.saved });
+        M.toast({ html: 'Trial removed from report', displayLength: 1500 });
+        event.target.classList.remove('red');
+        this.props.removeTrial(event);
 
     }
 
@@ -104,8 +104,8 @@ class Result extends Component {
             </li>
            
         )
-    }
+    };
 
-}
+};
 
 export default Result;

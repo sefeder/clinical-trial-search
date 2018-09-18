@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import API from "../utils/api";
 import Result from "../components/Result/";
-import M from 'materialize-css'
+import M from 'materialize-css';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -16,10 +16,10 @@ class Home extends Component {
             fileNameInput: '',
             docDefinition: {}
         };
-    }
+    };
 
     componentDidMount() {
-        document.getElementById('searchInput').focus()
+        document.getElementById('searchInput').focus();
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.collapsible');
             M.Collapsible.init(elems, {});
@@ -28,23 +28,23 @@ class Home extends Component {
             var elems = document.querySelectorAll('.modal');
             M.Modal.init(elems, {});
         });
-    }
+    };
 
     handleInputChange = event => {
         const {name, value} = event.target;
-        this.setState({[name]: value })
-    }
+        this.setState({[name]: value });
+    };
 
     downloadPdf = () => {
-        pdfMake.createPdf(this.state.docDefinition).download(`${this.state.fileNameInput}.pdf`)
-    }
+        pdfMake.createPdf(this.state.docDefinition).download(`${this.state.fileNameInput}.pdf`);
+    };
 
     createPreview = () => {
-        document.getElementById('fileNameInput').focus()
+        document.getElementById('fileNameInput').focus();
 
         const data = this.state.savedTrials.map((a, i) => [a.public_title, !a.interventions ? 'No interventions provided' : a.interventions.length === 0 ? 'No interventions provided' : { ul: a.interventions.map((el, i) => el.name) }, !a.locations ? 'No locations provided' : a.locations.length === 0 ? 'No locations provided' : { ul: a.locations.map((el, i) => el.name) }]);
 
-        const dataWithHeaders = [[{ text: 'Public Title', style: 'tableHeader' }, { text: 'Interventions', style: 'tableHeader' }, { text: 'Locations', style: 'tableHeader' }]].concat(data)
+        const dataWithHeaders = [[{ text: 'Public Title', style: 'tableHeader' }, { text: 'Interventions', style: 'tableHeader' }, { text: 'Locations', style: 'tableHeader' }]].concat(data);
 
         const docDefinition = {
             styles: {
@@ -86,39 +86,40 @@ class Home extends Component {
                 }
             ]
         };
-        this.setState({docDefinition})
+        this.setState({docDefinition});
         pdfMake.createPdf(docDefinition).getDataUrl( outDoc => {
             document.getElementById('pdfV').src = outDoc});
-    }
+    };
 
     submitSearch = event => {
         event.preventDefault();
         let topic = event.target.parentElement.children[0].children[0].children[0].value;
-        console.log(document.querySelector('select').value)
+        console.log(document.querySelector('select').value);
         let perPage = document.querySelector('select').value;
         API.getTrials(topic, perPage).then(res => {
-            this.setState({ trials: res.items, topic: topic })
-        })
+            this.setState({ trials: res.items, topic: topic });
+        });
     };
 
     saveTrial = event => {
         // event.preventDefault();
-        console.log(JSON.parse(event.target.parentElement.getAttribute('info')))
-        this.setState({ savedTrials: [...this.state.savedTrials, JSON.parse(event.target.parentElement.getAttribute('info'))] })
-    }
+        console.log(JSON.parse(event.target.parentElement.getAttribute('info')));
+        this.setState({ savedTrials: [...this.state.savedTrials, JSON.parse(event.target.parentElement.getAttribute('info'))] });
+    };
 
     removeTrial = event => {
         // event.preventDefault();
-        console.log(event.target.parentElement)
-        let result = JSON.parse(event.target.parentElement.getAttribute('info'))
-        let newSavedTrials = this.state.savedTrials.filter(el => el.id !== result.id)
-        this.setState({ savedTrials: newSavedTrials })
-    }
+        console.log(event.target.parentElement);
+        let result = JSON.parse(event.target.parentElement.getAttribute('info'));
+        let newSavedTrials = this.state.savedTrials.filter(el => el.id !== result.id);
+        this.setState({ savedTrials: newSavedTrials });
+    };
 
     render() {
         return (
             <div className="App container" id="main-container">
                 <h1>Search Report App</h1>
+                <h5 className="instructions"> Search for clinical trials, then click on each title for more information. Click the "Add to Report" button to add that trial to your saved report. When you're ready, click "Download Report" to add a name, see a preview, and download the final report.</h5>
                 <div className="">
                     <div>
                         <form id="form" onSubmit={this.submitSearch}>
@@ -127,7 +128,7 @@ class Home extends Component {
                                     // className="form-control"
                                     id="searchInput"
                                     type="text"
-                                    placeholder="eg. cancer"
+                                    placeholder="Find trial by keywords (eg. cancer)"
                                 />
                                 <button
                                     className="btn btn-primary"
@@ -139,9 +140,9 @@ class Home extends Component {
                             </div>
                             <div className="row">
                                 <div className="form-group ">
-                                    <div class="input-field">
+                                    <div className="input-field">
                                         <p className='white-text'>
-                                        Results per page: 
+                                        How many results to display: 
                                         </p>
                                         <select className="browser-default">
                                             <option value="10">10</option>
@@ -189,8 +190,8 @@ class Home extends Component {
                             </div>
                         </div>
             </div>
-        );
-    }
-}
+        )
+    };
+};
 
 export default Home;
