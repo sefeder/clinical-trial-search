@@ -27,6 +27,7 @@ class Result extends Component {
 
     submitSave = event => {
         event.preventDefault();
+        event.target.parentElement.parentElement.parentElement.children[0].classList.add('green-background');
         this.setState({ saved: !this.state.saved });
         M.toast({html: 'Trial added to report', displayLength: 1500});
         event.target.classList.add('red');
@@ -35,6 +36,7 @@ class Result extends Component {
 
     submitRemove = event => {
         event.preventDefault();
+        event.target.parentElement.parentElement.parentElement.children[0].classList.remove('green-background');
         this.setState({ saved: !this.state.saved });
         M.toast({ html: 'Trial removed from report', displayLength: 1500 });
         event.target.classList.remove('red');

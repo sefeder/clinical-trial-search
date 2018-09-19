@@ -36,6 +36,9 @@ class Home extends Component {
     };
 
     downloadPdf = () => {
+        if (this.state.fileNameInput === '') {
+
+        }
         pdfMake.createPdf(this.state.docDefinition).download(`${this.state.fileNameInput}.pdf`);
     };
 
@@ -93,11 +96,12 @@ class Home extends Component {
 
     submitSearch = event => {
         event.preventDefault();
+        this.setState({trials: []});
         let topic = event.target.parentElement.children[0].children[0].children[0].value;
         console.log(document.querySelector('select').value);
         let perPage = document.querySelector('select').value;
         API.getTrials(topic, perPage).then(res => {
-            this.setState({ trials: res.items, topic: topic });
+            this.setState({ trials: res.items, topic: topic, savedTrials: [] });
         });
     };
 
@@ -169,12 +173,10 @@ class Home extends Component {
                 <div className="modal modal-fixed-footer" id="downloadModal">
                         <div className="modal-content">
                            
-                                <h5 className="modal-title" id="exampleModalLabel">Name Your Report{this.state.fileNameInput !== '' ? `: ${this.state.fileNameInput}.pdf` : null }</h5>
-                            
-                           
-
+                            <h5 className="modal-title" id="exampleModalLabel">Name Your Report{this.state.fileNameInput !== '' ? `: ${this.state.fileNameInput}.pdf` : null }</h5>
                                 <form>
                                     <input onChange={this.handleInputChange}
+                                        className="validate"
                                         value={this.state.fileNameInput} placeholder="eg. my_first_report" type="text" id="fileNameInput" name="fileNameInput"/>
                                 </form>
                             < iframe id='pdfV' title="pdfPreview" style={{ "width": 600, 'height': 375 }} > </ iframe>
@@ -186,7 +188,7 @@ class Home extends Component {
                             style={{marginRight: 6}} type="button" className="modal-close btn red">
                                     Close
                                 </button>
-                                <button type="button" onClick={this.downloadPdf} className="btn btn-primary">Download</button>
+                                <button type="submit" onClick={this.downloadPdf} className="btn btn-primary">Download</button>
                             </div>
                         </div>
             </div>

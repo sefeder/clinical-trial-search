@@ -38,3 +38,7 @@ select {
      font-weight: bold;
     -webkit-text-stroke-width: .8px;
 }
+
+.green-background {
+    background-color: rgb(9, 226, 9);
+}
